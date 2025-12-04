@@ -3,14 +3,57 @@ import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-ro
 import { 
   Atom, Calendar, BookOpen, Users, Mail, Menu, X, Moon, Sun, 
   ChevronRight, ExternalLink, Award, Zap, Beaker, Microscope, Globe, 
-  Facebook, Instagram, Youtube, ArrowRight
+  Facebook, Instagram, Youtube, ArrowRight, MapPin
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+
+// --- GLOBAL STYLES COMPONENT ---
+// In a single-file React setup, we inject custom CSS like this to ensure it loads.
+const GlobalStyles = ({ isDark }) => (
+  <style>{`
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+    
+    body { 
+      margin: 0; 
+      min-height: 100vh;
+      background-color: ${isDark ? '#0a0a12' : '#f8fafc'};
+      color: ${isDark ? '#fff' : '#0f172a'};
+      transition: background-color 0.5s ease;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: ${isDark ? '#0a0a12' : '#f1f5f9'};
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #3b82f6;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #60a5fa;
+    }
+
+    /* Animation Utilities */
+    .animate-spin-slow {
+      animation: spin 8s linear infinite;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  `}</style>
+);
 
 // --- UI COMPONENTS ---
 
 const GridBackground = ({ isDark }) => (
   <div className={`fixed inset-0 z-0 pointer-events-none transition-colors duration-500 ${isDark ? 'bg-[#0a0a12]' : 'bg-slate-50'}`}>
+    {/* Grid Pattern */}
     <div 
       className="absolute inset-0"
       style={{
@@ -22,6 +65,7 @@ const GridBackground = ({ isDark }) => (
         backgroundSize: '40px 40px'
       }}
     />
+    {/* Purple/Blue Glow Effects */}
     <div className={`absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] opacity-20 ${isDark ? 'bg-purple-600' : 'bg-blue-400'}`} />
     <div className={`absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full blur-[120px] opacity-20 ${isDark ? 'bg-blue-600' : 'bg-purple-400'}`} />
   </div>
@@ -392,6 +436,7 @@ function App() {
   return (
     <Router>
       <div className={`min-h-screen font-sans transition-colors duration-300 ${isDark ? 'bg-[#0a0a12]' : 'bg-slate-50'}`}>
+        <GlobalStyles isDark={isDark} />
         <GridBackground isDark={isDark} />
         <Navbar isDark={isDark} toggleTheme={toggleTheme} />
         
