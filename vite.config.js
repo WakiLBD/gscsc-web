@@ -4,5 +4,6 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/gscsc-web/', // REPLACE THIS WITH YOUR REPO NAME
+  // IMPORTANT: The name here must match your GitHub Repository name exactly
+  base: '/gscsc-web/', 
 })
